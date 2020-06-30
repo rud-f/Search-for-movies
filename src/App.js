@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer, useState, useEffect } from 'react'
+import { initialState, reducer } from './Store'
+import { Header } from './Header'
+import { Content } from './Content'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const App = () => {
+    const [inputValue, changeInputValue] = useState('')
+    const [items, showMore] = useState(10)
+    const [state, dispatch] = useReducer(reducer, initialState)
+
+    useEffect(() => showMore(10), [state])
+
+    return (
+        <>
+            <Header
+                inputValue={inputValue}
+                changeInputValue={changeInputValue}
+                dispatch={dispatch}
+            />
+            <Content
+                state={state}
+                items={items}
+                showMore={showMore}
+            />
+        </>
+    )
 }
 
-export default App;
+
