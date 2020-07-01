@@ -1,30 +1,21 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Navbar, Button, Nav, FormControl, Form } from 'react-bootstrap'
-import { SEARCH, RESTORE } from './Store'
+import { StoreContext } from './Store'
 
-export const Header = ({ inputValue, changeInputValue, dispatch }) => {
-    const search = (e) => {
+export const Header = () => {
+    const [inputValue, changeInputValue] = useState('')
+    const { search } = useContext(StoreContext)
+    const enter = (e) => {
         e.preventDefault()
-
-        if(inputValue.length > 1) {
-            const regexp = new RegExp(`${inputValue}`, 'i')
-            dispatch({
-                type: SEARCH,
-                regexp
-            })
-        } else if(inputValue.length < 2) {
-            dispatch({
-                type: RESTORE,
-                regexp: null
-            })
-        }
+        search(inputValue)
     }
+
     return (
         <Navbar bg='dark' variant='dark'>
             <Navbar.Brand>MOVIES</Navbar.Brand>
             <Nav className='mr-auto'>
             </Nav>
-            <Form inline onSubmit={e => search(e)} >
+            <Form inline onSubmit={e => enter(e)} >
                 <FormControl
                     type='text'
                     placeholder='Search'
