@@ -21,7 +21,7 @@ export const Header = () => {
                     placeholder='Search'
                     className='mr-sm-2'
                     value={inputValue}
-                    onChange={(e) => changeInputValue(e.target.value.match(/[\w\d]+/))}
+                    onChange={(e) => changeInputValue(e.target.value.replace(/[^a-zA-Z0-9]+/g, ''))}
                 />
                 <Button variant='outline-info' type='submit' >Search</Button>
             </Form>
